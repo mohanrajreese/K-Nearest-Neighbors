@@ -1,15 +1,17 @@
-import pandas as pd                                      # For importing data from neraya formats like CSV, JSON, SQL
-from sklearn.model_selection import train_test_split     # Split arrays or matrices into random train and test subsets
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import confusion_matrix            # Compute confusion matrix to evaluate the accuracy of classification
+import pandas as pd                                      
+from sklearn.model_selection import train_test_split    
+from sklearn.neighbors import KNeighborsClassifier      
+from sklearn.metrics import confusion_matrix            
 df = pd.read_csv('heart.csv')
 
 y = df['output']
 X = df.drop('output', axis = 1)                     
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.5, random_state = 0)
-model = KNeighborsClassifier(n_neighbors=6)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20,shuffle = True)
+model = KNeighborsClassifier(n_neighbors=7)
 model.fit(X_train,y_train)
 predicted= model.predict(X_test)
+
+print("The Total Length of our dataset is  : ",len(df))
 print("The Length of training dataset is   : ",len(y_train))
 print("The Length of testing dataset is    : ",len(y_test))
 cm= confusion_matrix(y_test, predicted)
